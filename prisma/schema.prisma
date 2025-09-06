@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  createdAt DateTime @default(now())
+  progress  Progress[]
+  feedback  Feedback[]
+}
+
+model Progress {
+  id          String   @id @default(cuid())
+  userId      String
+  moduleSlug  String
+  completedAt DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  @@unique([userId, moduleSlug])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String?
+  message   String
+  rating    Int
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  userEmail String?
+  type      String   // "signup" | "clickedStart" | "outboundCourse"
+  meta      Json?
+  createdAt DateTime @default(now())
+}
+
+
