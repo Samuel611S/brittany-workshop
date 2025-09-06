@@ -271,4 +271,20 @@ export function getTotalModules(): number {
   return modules.length
 }
 
+export function getModules(): Module[] {
+  return modules
+}
+
+export function getModule(slug: string): Module | undefined {
+  return getModuleBySlug(slug)
+}
+
+export function getNextSlug(currentSlug: string): string | null {
+  const currentIndex = modules.findIndex(m => m.slug === currentSlug)
+  if (currentIndex === -1 || currentIndex === modules.length - 1) {
+    return null
+  }
+  return modules[currentIndex + 1].slug
+}
+
 

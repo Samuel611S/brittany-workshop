@@ -1,18 +1,19 @@
 # NextKey Housing Access Foundation - Learning Platform
 
-A production-ready, free-tier friendly educational platform built with Next.js 14, TypeScript, and TailwindCSS for NYC housing education.
+A production-ready, free-tier friendly educational platform built with Next.js 14, TypeScript, and TailwindCSS for NYC housing education. **Fully bilingual (English/Spanish)** with comprehensive learning tracks for different housing audiences.
 
 ## Features
 
-- **Learning Track Selection** - 5 specialized tracks for different housing audiences
-- **Email Gate** - Soft gate by email signup with JWT-based access
-- **Module System** - 17+ modules across 5 tracks, each with individual pages
-- **Progress Tracking** - Mark modules as completed with persistent storage
-- **Analytics** - Lightweight event tracking for signups and CTA clicks
-- **Feedback System** - User feedback collection with ratings
-- **Admin Dashboard** - Protected admin area with statistics and user export
-- **Community Survey** - Integrated survey system for content prioritization
-- **Free Stack** - Vercel Hobby, Neon Postgres, Resend email
+- **🌍 Bilingual Support** - Complete English and Spanish translations with language switcher
+- **🎯 Learning Track Selection** - 5 specialized tracks for different housing audiences
+- **📧 Email Gate** - Soft gate by email signup with JWT-based access
+- **📚 Module System** - 17+ modules across 5 tracks, each with individual pages
+- **📊 Progress Tracking** - Mark modules as completed with persistent storage
+- **📈 Analytics** - Lightweight event tracking for signups and CTA clicks
+- **💬 Feedback System** - User feedback collection with ratings
+- **👨‍💼 Admin Dashboard** - Protected admin area with statistics and user export
+- **📋 Community Survey** - Integrated survey system for content prioritization
+- **🆓 Free Stack** - Vercel Hobby, Neon Postgres, Resend email
 
 ## Tech Stack
 
@@ -51,7 +52,20 @@ ADMIN_PASSWORD="your-admin-password"
 NEXT_PUBLIC_BASE_URL="http://localhost:3000"  # For production, use your domain
 ```
 
-### 3. Database Setup
+### 3. Language Configuration
+
+The platform supports both English and Spanish out of the box. Language preferences are stored in localStorage and persist across sessions. Users can switch languages using the language switcher in the header.
+
+**Supported Languages:**
+- 🇺🇸 English (default)
+- 🇪🇸 Spanish (Español)
+
+**Translation Files:**
+- `lib/i18n.ts` - Main translation system
+- `data/modules.ts` - English module content
+- `data/modules-es.ts` - Spanish module content
+
+### 4. Database Setup
 
 Generate Prisma client and push schema to database:
 
@@ -60,13 +74,42 @@ npm run db:generate
 npm run db:push
 ```
 
-### 4. Run Development Server
+### 5. Run Development Server
 
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+## Learning Tracks
+
+The platform offers 5 specialized learning tracks for different housing audiences:
+
+### 1. **Tenant & Voucher Holder Track** (4 modules)
+- **Audience**: Families & individuals navigating NYC housing programs
+- **Duration**: ~6 hours total
+- **Modules**: Housing rights, voucher programs, apartment search, housing stability
+
+### 2. **Landlord & Property Manager Track** (4 modules)
+- **Audience**: Landlords, property managers, and housing providers
+- **Duration**: ~5 hours total
+- **Modules**: Voucher benefits, lease-up process, case manager relations, compliance
+
+### 3. **Housing Secrets Track** (4 modules)
+- **Audience**: Housing seekers and landlords wanting insider knowledge
+- **Duration**: ~5 hours total
+- **Modules**: Fast-tracking applications, landlord incentives, networking, additional programs
+
+### 4. **Advocate & Community Track** (4 modules)
+- **Audience**: Caseworkers, shelter staff, community leaders, and advocates
+- **Duration**: ~6 hours total
+- **Modules**: NYC housing systems, advocacy skills, community organizing, policy influence
+
+### 5. **Real Estate Professional Track** (1 comprehensive module)
+- **Audience**: Real estate agents, brokers, property managers, and housing professionals
+- **Duration**: ~12 hours total + certification
+- **Modules**: NYC Voucher Program Specialist Certification
 
 ## Deployment
 

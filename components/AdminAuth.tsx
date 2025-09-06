@@ -11,18 +11,26 @@ export default function AdminAuth({ onAuthenticated }: AdminAuthProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
 
-    // In a real app, you'd verify this server-side
-    // For now, we'll check against a client-side constant
-    // In production, this should be handled by a proper auth system
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD || password === 'admin123') {
-      onAuthenticated()
-    } else {
-      setError('Invalid password')
+    try {
+      const response = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+
+      if (response.ok) {
+        onAuthenticated()
+      } else {
+        setError('Invalid password')
+        setIsLoading(false)
+      }
+    } catch (error) {
+      setError('Authentication failed')
       setIsLoading(false)
     }
   }

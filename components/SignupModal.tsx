@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { X } from 'lucide-react'
+import { useLanguage } from '@/lib/language-context'
 
 interface SignupModalProps {
   isOpen: boolean
@@ -10,6 +11,7 @@ interface SignupModalProps {
 }
 
 export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalProps) {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -67,7 +69,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
       />
       <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 animate-fade-in">
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold">Join NextKey Housing Access Foundation</h2>
+          <h2 className="text-xl font-semibold">{t.joinFoundation}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -86,7 +88,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
           
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name *
+              {t.nameRequired.split(' ')[0]} *
             </label>
             <input
               type="text"
@@ -96,13 +98,13 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
               onChange={handleChange}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Your full name"
+              placeholder={t.nameRequired.split(' ')[0]}
             />
           </div>
           
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email *
+              {t.emailRequired.split(' ')[0]} *
             </label>
             <input
               type="email"
@@ -127,7 +129,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
               className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
             <label htmlFor="consent" className="ml-2 text-sm text-gray-700">
-              I agree to receive workshop updates and access materials *
+              {t.consentRequired} *
             </label>
           </div>
           
@@ -137,14 +139,14 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
               onClick={onClose}
               className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
             >
-              Cancel
+              {t.cancel}
             </button>
             <button
               type="submit"
               disabled={isLoading}
               className="flex-1 px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-md transition-colors"
             >
-              {isLoading ? 'Signing up...' : 'Sign Up'}
+              {isLoading ? t.signingUp : t.signUp}
             </button>
           </div>
         </form>
