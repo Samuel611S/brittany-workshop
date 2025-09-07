@@ -148,51 +148,55 @@ export default function WorkshopPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+    <div className="bg-gray-50">
+      {/* Back Button and Title */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               <button
                 onClick={() => router.back()}
-                className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
+                className="flex items-center text-gray-600 hover:text-gray-900 mr-3 sm:mr-4"
               >
-                <ArrowLeft className="h-5 w-5 mr-1" />
-                {t.back}
+                <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-1" />
+                <span className="text-sm sm:text-base">{t.back}</span>
               </button>
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+              <div className="hidden sm:block w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-sm">NK</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">NextKey Housing Access Foundation</h1>
-                <p className="text-sm text-gray-600">Learning Dashboard</p>
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">NextKey Housing Access Foundation</h1>
+                <p className="text-xs sm:text-sm text-gray-600">Learning Dashboard</p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <LanguageSwitcher />
               <button
-              onClick={handleStartLearning}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
-            >
-              {process.env.NEXT_PUBLIC_WORKSHOP_EXTERNAL_URL ? (
-                <>
-                  Start Learning
-                  <ExternalLink className="h-4 w-4" />
-                </>
-              ) : (
-                'Start Learning'
-              )}
+                onClick={handleStartLearning}
+                className="bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-blue-700 transition-colors inline-flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
+              >
+                {process.env.NEXT_PUBLIC_WORKSHOP_EXTERNAL_URL ? (
+                  <>
+                    <span className="hidden sm:inline">Start Learning</span>
+                    <span className="sm:hidden">Start</span>
+                    <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
+                  </>
+                ) : (
+                  <>
+                    <span className="hidden sm:inline">Start Learning</span>
+                    <span className="sm:hidden">Start</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Progress Section */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Progress</h2>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Your Progress</h2>
           <ProgressBar 
             completed={completedModules.length} 
             total={getTotalModules()} 
@@ -200,23 +204,23 @@ export default function WorkshopPage() {
         </div>
 
         {/* Modules by Track */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {learningTracks.map((track) => {
             return (
-              <div key={track.id} className="bg-white rounded-lg shadow-sm p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-3 h-3 rounded-full ${
+              <div key={track.id} className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
                     track.color === 'blue' ? 'bg-blue-500' :
                     track.color === 'green' ? 'bg-green-500' :
                     track.color === 'purple' ? 'bg-purple-500' :
                     track.color === 'orange' ? 'bg-orange-500' :
                     'bg-red-500'
                   }`} />
-                  <h3 className="text-xl font-semibold text-gray-900">{track.name}</h3>
-                  <span className="text-sm text-gray-500">({track.modules.length} modules)</span>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{track.name}</h3>
+                  <span className="text-xs sm:text-sm text-gray-500">({track.modules.length} modules)</span>
                 </div>
-                <p className="text-gray-600 mb-4">{track.description}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">{track.description}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {track.modules.map((module) => (
                     <ModuleCard
                       key={module.slug}
@@ -234,15 +238,15 @@ export default function WorkshopPage() {
         </div>
 
         {/* Feedback Section */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mt-8">
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Share Your Feedback</h3>
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mt-6 sm:mt-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Share Your Feedback</h3>
           {feedbackSubmitted ? (
-            <div className="text-center py-8">
-              <div className="text-green-600 text-lg font-medium mb-2">Thank you for your feedback!</div>
-              <p className="text-gray-600">Your input helps us improve the workshop.</p>
+            <div className="text-center py-6 sm:py-8">
+              <div className="text-green-600 text-base sm:text-lg font-medium mb-2">Thank you for your feedback!</div>
+              <p className="text-sm sm:text-base text-gray-600">Your input helps us improve the workshop.</p>
             </div>
           ) : (
-            <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+            <form onSubmit={handleFeedbackSubmit} className="space-y-3 sm:space-y-4">
               <div>
                 <label htmlFor="rating" className="block text-sm font-medium text-gray-700 mb-2">
                   How would you rate this workshop?
@@ -253,13 +257,13 @@ export default function WorkshopPage() {
                       key={rating}
                       type="button"
                       onClick={() => setFeedback(prev => ({ ...prev, rating }))}
-                      className={`p-2 rounded ${
+                      className={`p-1 sm:p-2 rounded ${
                         feedback.rating >= rating
                           ? 'text-yellow-400'
                           : 'text-gray-300'
                       } hover:text-yellow-400 transition-colors`}
                     >
-                      <Star className="h-6 w-6 fill-current" />
+                      <Star className="h-5 w-5 sm:h-6 sm:w-6 fill-current" />
                     </button>
                   ))}
                 </div>
@@ -272,15 +276,15 @@ export default function WorkshopPage() {
                   id="message"
                   value={feedback.message}
                   onChange={(e) => setFeedback(prev => ({ ...prev, message: e.target.value }))}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
                   placeholder="Tell us what you think about the workshop..."
                 />
               </div>
               <button
                 type="submit"
                 disabled={isSubmittingFeedback}
-                className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="bg-blue-600 text-white px-4 sm:px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
               >
                 {isSubmittingFeedback ? 'Submitting...' : 'Submit Feedback'}
               </button>

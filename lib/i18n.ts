@@ -7,6 +7,10 @@ export interface Translations {
   language: string
   getStarted: string
   back: string
+  home: string
+  login: string
+  logout: string
+  signup: string
   
   // Hero Section
   heroTitle: string
@@ -43,6 +47,20 @@ export interface Translations {
   educationalWorkshops: string
   protectedMaterial: string
   notLegalAdvice: string
+  footerDescription: string
+  quickLinks: string
+  learningTracks: string
+  contactUs: string
+  address: string
+  allRightsReserved: string
+  privacyPolicy: string
+  termsOfService: string
+  track1: string
+  track2: string
+  track3: string
+  track4: string
+  track5: string
+  admin: string
   
   // Signup Modal
   joinFoundation: string
@@ -61,6 +79,7 @@ export interface Translations {
   profile: string
   
   // Workshop
+  workshop: string
   learningDashboard: string
   yourProgress: string
   startLearning: string
@@ -88,9 +107,14 @@ export const translations: Record<Language, Translations> = {
     language: 'Language',
     getStarted: 'Get Started',
     back: 'Back',
+    home: 'Home',
+    login: 'Login',
+    logout: 'Logout',
+    signup: 'Sign Up',
     profile: 'Profile',
     
     // Workshop
+    workshop: 'Workshop',
     learningDashboard: 'Learning Dashboard',
     yourProgress: 'Your Progress',
     startLearning: 'Start Learning',
@@ -135,6 +159,20 @@ export const translations: Record<Language, Translations> = {
     educationalWorkshops: 'Educational workshops designed for community empowerment.',
     protectedMaterial: 'This educational material is protected by copyright law. Not legal advice.',
     notLegalAdvice: 'Not legal advice.',
+    footerDescription: 'Empowering communities through accessible housing education and support.',
+    quickLinks: 'Quick Links',
+    learningTracks: 'Learning Tracks',
+    contactUs: 'Contact Us',
+    address: '123 Housing Ave, City, State 12345',
+    allRightsReserved: 'All rights reserved.',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    track1: 'Housing Voucher Basics',
+    track2: 'Application Process',
+    track3: 'Rights & Responsibilities',
+    track4: 'Community Resources',
+    track5: 'Success Strategies',
+    admin: 'Admin',
     
     joinFoundation: 'Join NextKey Housing Access Foundation',
     nameRequired: 'Name is required',
@@ -158,9 +196,14 @@ export const translations: Record<Language, Translations> = {
     language: 'Idioma',
     getStarted: 'Comenzar',
     back: 'Atrás',
+    home: 'Inicio',
+    login: 'Iniciar Sesión',
+    logout: 'Cerrar Sesión',
+    signup: 'Registrarse',
     profile: 'Perfil',
     
     // Workshop
+    workshop: 'Taller',
     learningDashboard: 'Panel de Aprendizaje',
     yourProgress: 'Tu Progreso',
     startLearning: 'Comenzar Aprendizaje',
@@ -205,6 +248,20 @@ export const translations: Record<Language, Translations> = {
     educationalWorkshops: 'Talleres educativos diseñados para el empoderamiento comunitario.',
     protectedMaterial: 'Este material educativo está protegido por derechos de autor. No es asesoría legal.',
     notLegalAdvice: 'No es asesoría legal.',
+    footerDescription: 'Empoderando comunidades a través de educación y apoyo accesible en vivienda.',
+    quickLinks: 'Enlaces Rápidos',
+    learningTracks: 'Rutas de Aprendizaje',
+    contactUs: 'Contáctanos',
+    address: '123 Avenida de Vivienda, Ciudad, Estado 12345',
+    allRightsReserved: 'Todos los derechos reservados.',
+    privacyPolicy: 'Política de Privacidad',
+    termsOfService: 'Términos de Servicio',
+    track1: 'Conceptos Básicos de Vales de Vivienda',
+    track2: 'Proceso de Solicitud',
+    track3: 'Derechos y Responsabilidades',
+    track4: 'Recursos Comunitarios',
+    track5: 'Estrategias de Éxito',
+    admin: 'Administrador',
     
     joinFoundation: 'Únete a la Fundación NextKey de Acceso a Vivienda',
     nameRequired: 'El nombre es requerido',

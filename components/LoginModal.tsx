@@ -62,25 +62,25 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-black/50" 
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 animate-fade-in">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">Welcome Back</h2>
+      <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 animate-fade-in max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Welcome Back</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
             aria-label="Close modal"
           >
-            <X size={20} />
+            <X size={18} className="sm:w-5 sm:h-5" />
           </button>
         </div>
         
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
               {error}
@@ -92,7 +92,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
               Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
               <input
                 type="email"
                 id="email"
@@ -100,7 +100,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="w-full pl-8 sm:pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-sm sm:text-base"
                 placeholder="your@email.com"
               />
             </div>
@@ -111,7 +111,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
@@ -119,50 +119,50 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                className="w-full pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 text-sm sm:text-base"
                 placeholder="Enter your password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
               >
-                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                {showPassword ? <EyeOff size={14} className="sm:w-4 sm:h-4" /> : <Eye size={14} className="sm:w-4 sm:h-4" />}
               </button>
             </div>
           </div>
           
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
             <div className="flex items-center">
               <input
                 type="checkbox"
                 id="remember"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded flex-shrink-0"
               />
-              <label htmlFor="remember" className="ml-2 text-sm text-gray-700">
+              <label htmlFor="remember" className="ml-2 text-xs sm:text-sm text-gray-700">
                 Remember me
               </label>
             </div>
             <button
               type="button"
-              className="text-sm text-blue-600 hover:text-blue-700"
+              className="text-xs sm:text-sm text-blue-600 hover:text-blue-700 self-start sm:self-auto"
             >
               Forgot password?
             </button>
           </div>
           
-          <div className="pt-4">
+          <div className="pt-3 sm:pt-4">
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm sm:text-base"
             >
               {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </div>
           
-          <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
-            <p className="text-sm text-blue-800">
+          <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-blue-800">
               <strong>Demo Password:</strong> demo123
             </p>
             <p className="text-xs text-blue-600 mt-1">
@@ -170,7 +170,7 @@ export default function LoginModal({ isOpen, onClose, onSuccess, onOpenSignup }:
             </p>
           </div>
           
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-center text-xs sm:text-sm text-gray-600">
             Don't have an account?{' '}
             <button
               type="button"
