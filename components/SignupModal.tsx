@@ -7,7 +7,7 @@ import { useLanguage } from '@/lib/language-context'
 interface SignupModalProps {
   isOpen: boolean
   onClose: () => void
-  onSuccess: () => void
+  onSuccess: (userData?: any) => void
 }
 
 export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalProps) {
@@ -37,7 +37,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
       const data = await response.json()
 
       if (data.success) {
-        onSuccess()
+        onSuccess(data.user)
         onClose()
         setFormData({ name: '', email: '', consent: false })
         // Show success message with login info

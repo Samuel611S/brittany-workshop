@@ -5,13 +5,33 @@ import Link from 'next/link';
 import { useUser } from '@/lib/user-context';
 import { useLanguage } from '@/lib/language-context';
 import { Menu, X, User, LogOut, Home, BookOpen, Settings } from 'lucide-react';
+import LoginModal from './LoginModal';
+import SignupModal from './SignupModal';
 
 export default function Header() {
-  const { user, logout } = useUser();
+  const { user, logout, login } = useUser();
   const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const handleLoginSuccess = (userData: any) => {
+    login(userData);
+    setIsLoginOpen(false);
+    // Redirect to workshop page
+    window.location.href = '/workshop';
+  };
+
+  const handleSignupSuccess = (userData: any) => {
+    if (userData) {
+      login(userData);
+    }
+    setIsSignupOpen(false);
+    // Show success message with login info
+    alert('Account created successfully! Your default password is: demo123\n\nYou can now log in with your email and this password.');
+  };
 
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -61,10 +81,16 @@ export default function Header() {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                <button 
+                  onClick={() => setIsLoginOpen(true)}
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
                   {t.login}
                 </button>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                <button 
+                  onClick={() => setIsSignupOpen(true)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                >
                   {t.signup}
                 </button>
               </div>
@@ -137,10 +163,22 @@ export default function Header() {
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <button className="w-full text-left text-gray-600 hover:text-gray-900 transition-colors py-2">
+                    <button 
+                      onClick={() => {
+                        setIsLoginOpen(true);
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full text-left text-gray-600 hover:text-gray-900 transition-colors py-2"
+                    >
                       {t.login}
                     </button>
-                    <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                    <button 
+                      onClick={() => {
+                        setIsSignupOpen(true);
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                    >
                       {t.signup}
                     </button>
                   </div>
@@ -150,6 +188,22 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      {/* Modals */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onSuccess={handleLoginSuccess}
+        onOpenSignup={() => {
+          setIsLoginOpen(false);
+          setIsSignupOpen(true);
+        }}
+      />
+      <SignupModal
+        isOpen={isSignupOpen}
+        onClose={() => setIsSignupOpen(false)}
+        onSuccess={handleSignupSuccess}
+      />
     </header>
   );
 }

@@ -110,6 +110,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       message: 'Successfully signed up! Check your email for access link.',
+      user: {
+        id: user.id,
+        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        avatar: user.avatar,
+        bio: user.bio,
+        phone: user.phone,
+        location: user.location,
+      },
       remaining: rateLimitResult.remaining 
     })
 

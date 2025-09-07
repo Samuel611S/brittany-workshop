@@ -18,7 +18,7 @@ export default function HomePage() {
   const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)
   const { language, t } = useLanguage()
-  const { user, logout } = useUser()
+  const { user, logout, login } = useUser()
   const searchParams = useSearchParams()
 
   useEffect(() => {
@@ -27,12 +27,16 @@ export default function HomePage() {
     }
   }, [searchParams])
 
-  const handleSignupSuccess = () => {
-    // Could show a success toast here
-    console.log('Signup successful')
+  const handleSignupSuccess = (userData: any) => {
+    if (userData) {
+      login(userData)
+    }
+    // Show success message with login info
+    alert('Account created successfully! Your default password is: demo123\n\nYou can now log in with your email and this password.')
   }
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (userData: any) => {
+    login(userData)
     // Redirect to workshop page
     window.location.href = '/workshop'
   }
