@@ -3,8 +3,11 @@ import jwt from 'jsonwebtoken'
 const APP_SECRET = process.env.APP_SECRET || 'fallback-secret'
 
 export interface JWTPayload {
-  email: string
-  userId: string
+  email?: string
+  userId?: string
+  adminId?: string
+  timestamp?: number
+  ip?: string
   iat?: number
   exp?: number
 }

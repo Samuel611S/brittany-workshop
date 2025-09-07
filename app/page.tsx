@@ -1,20 +1,69 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { ArrowRight, CheckCircle, Users, BookOpen, Award, Target, Brain, MessageSquare, Mail, Instagram, Facebook } from 'lucide-react'
 import SignupModal from '@/components/SignupModal'
+import LoginModal from '@/components/LoginModal'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import FeedbackForm from '@/components/FeedbackForm'
 import { useLanguage } from '@/lib/language-context'
+import { useUser } from '@/lib/user-context'
 import { learningTracks } from '@/data/modules'
 import { learningTracksEs } from '@/data/modules-es'
 
 export default function HomePage() {
   const [isSignupOpen, setIsSignupOpen] = useState(false)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)
   const { language, t } = useLanguage()
+  const { user, logout } = useUser()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.get('login') === 'true') {
+      setIsLoginOpen(true)
+    }
+  }, [searchParams])
 
   const handleSignupSuccess = () => {
     // Could show a success toast here
     console.log('Signup successful')
+  }
+
+  const handleLoginSuccess = () => {
+    // Redirect to workshop page
+    window.location.href = '/workshop'
+  }
+
+  const handleFeedbackSubmit = async (message: string, rating: number) => {
+    setIsSubmittingFeedback(true)
+    try {
+      const response = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          rating,
+        }),
+      })
+
+      if (response.ok) {
+        setFeedbackSubmitted(true)
+        // Reset after 5 seconds
+        setTimeout(() => setFeedbackSubmitted(false), 5000)
+      } else {
+        alert('Failed to submit feedback. Please try again.')
+      }
+    } catch (error) {
+      console.error('Feedback submission failed:', error)
+      alert('Failed to submit feedback. Please try again.')
+    } finally {
+      setIsSubmittingFeedback(false)
+    }
   }
 
   // Get the appropriate tracks based on language
@@ -48,12 +97,46 @@ export default function HomePage() {
             </div>
             <div className="flex items-center gap-4">
               <LanguageSwitcher />
-              <button
-                onClick={() => setIsSignupOpen(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                {t.getStarted}
-              </button>
+              {user ? (
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-700">
+                    Welcome back, {user.firstName || user.name || 'User'}!
+                  </span>
+                  <a
+                    href="/profile"
+                    className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    Profile
+                  </a>
+                  <a
+                    href="/workshop"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    Continue Learning
+                  </a>
+                  <button
+                    onClick={logout}
+                    className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button 
+                    onClick={() => setIsLoginOpen(true)} 
+                    className="text-gray-700 hover:text-gray-900 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => setIsSignupOpen(true)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    {t.getStarted}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -171,6 +254,27 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* Feedback Section */}
+        <div className="mt-16 bg-white rounded-lg shadow-sm p-8">
+          <div className="text-center mb-8">
+            <MessageSquare className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              {t.shareFeedback || 'Share Your Feedback'}
+            </h2>
+            <p className="text-lg text-gray-600">
+              {t.feedbackDescription || 'Help us improve our workshops by sharing your experience'}
+            </p>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            <FeedbackForm
+              onSubmit={handleFeedbackSubmit}
+              isSubmitting={isSubmittingFeedback}
+              submitted={feedbackSubmitted}
+            />
+          </div>
+        </div>
+
         {/* Help Section */}
         <div className="mt-16 bg-gray-50 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">{t.needHelp}</h2>
@@ -211,6 +315,12 @@ export default function HomePage() {
         isOpen={isSignupOpen}
         onClose={() => setIsSignupOpen(false)}
         onSuccess={handleSignupSuccess}
+      />
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onSuccess={handleLoginSuccess}
+        onOpenSignup={() => setIsSignupOpen(true)}
       />
     </div>
   )

@@ -263,8 +263,8 @@ export function getModuleBySlug(slug: string): Module | undefined {
   return modules.find(module => module.slug === slug)
 }
 
-export function getModulesBySection(section: string): Module[] {
-  return modules.filter(module => module.section === section)
+export function getModulesByTrack(track: string): Module[] {
+  return modules.filter(module => module.track === track)
 }
 
 export function getTotalModules(): number {

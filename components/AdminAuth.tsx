@@ -17,19 +17,26 @@ export default function AdminAuth({ onAuthenticated }: AdminAuthProps) {
     setError('')
 
     try {
+      console.log('Attempting admin authentication...')
       const response = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
       })
 
+      console.log('Admin auth response:', response.status, response.ok)
+      
       if (response.ok) {
+        console.log('Admin authentication successful')
         onAuthenticated()
       } else {
+        const errorData = await response.json()
+        console.error('Admin auth error:', errorData)
         setError('Invalid password')
         setIsLoading(false)
       }
     } catch (error) {
+      console.error('Admin auth failed:', error)
       setError('Authentication failed')
       setIsLoading(false)
     }

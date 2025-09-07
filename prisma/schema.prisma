@@ -13,8 +13,16 @@ datasource db {
 model User {
   id        String   @id @default(cuid())
   name      String?
+  firstName String?
+  lastName  String?
   email     String   @unique
+  password  String?  // For login system
+  avatar    String?  // Profile picture URL
+  bio       String?  // User bio
+  phone     String?  // Phone number
+  location  String?  // User location
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   progress  Progress[]
   feedback  Feedback[]
 }

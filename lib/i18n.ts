@@ -6,6 +6,7 @@ export interface Translations {
   chooseTrack: string
   language: string
   getStarted: string
+  back: string
   
   // Hero Section
   heroTitle: string
@@ -56,6 +57,24 @@ export interface Translations {
   networkError: string
   successMessage: string
   
+  // Navigation
+  profile: string
+  
+  // Workshop
+  learningDashboard: string
+  yourProgress: string
+  startLearning: string
+  feedback: string
+  submitFeedback: string
+  feedbackSubmitted: string
+  
+  // Feedback
+  shareFeedback: string
+  feedbackDescription: string
+  rating: string
+  tellUsExperience: string
+  thankYouFeedback: string
+  
   // Common
   loading: string
   error: string
@@ -68,6 +87,23 @@ export const translations: Record<Language, Translations> = {
     chooseTrack: 'Choose Your Learning Track',
     language: 'Language',
     getStarted: 'Get Started',
+    back: 'Back',
+    profile: 'Profile',
+    
+    // Workshop
+    learningDashboard: 'Learning Dashboard',
+    yourProgress: 'Your Progress',
+    startLearning: 'Start Learning',
+    feedback: 'Feedback',
+    submitFeedback: 'Submit Feedback',
+    feedbackSubmitted: 'Feedback Submitted',
+    
+    // Feedback
+    shareFeedback: 'Share Your Feedback',
+    feedbackDescription: 'Help us improve our workshops by sharing your experience',
+    rating: 'Rating',
+    tellUsExperience: 'Tell us about your experience with our workshops...',
+    thankYouFeedback: 'Thank you for your feedback! It helps us improve our workshops.',
     
     heroTitle: 'NextKey Housing Access Foundation',
     heroDescription: 'Choose Your Learning Path. NextKey Housing Access Foundation offers specialized workshop tracks designed for different audiences. Select the track that best matches your role and housing goals.',
@@ -121,6 +157,23 @@ export const translations: Record<Language, Translations> = {
     chooseTrack: 'Elige Tu Ruta de Aprendizaje',
     language: 'Idioma',
     getStarted: 'Comenzar',
+    back: 'Atrás',
+    profile: 'Perfil',
+    
+    // Workshop
+    learningDashboard: 'Panel de Aprendizaje',
+    yourProgress: 'Tu Progreso',
+    startLearning: 'Comenzar Aprendizaje',
+    feedback: 'Comentarios',
+    submitFeedback: 'Enviar Comentarios',
+    feedbackSubmitted: 'Comentarios Enviados',
+    
+    // Feedback
+    shareFeedback: 'Comparte Tus Comentarios',
+    feedbackDescription: 'Ayúdanos a mejorar nuestros talleres compartiendo tu experiencia',
+    rating: 'Calificación',
+    tellUsExperience: 'Cuéntanos sobre tu experiencia con nuestros talleres...',
+    thankYouFeedback: '¡Gracias por tus comentarios! Nos ayudan a mejorar nuestros talleres.',
     
     heroTitle: 'Fundación NextKey de Acceso a Vivienda',
     heroDescription: 'Elige Tu Ruta de Aprendizaje. La Fundación NextKey de Acceso a Vivienda ofrece rutas de talleres especializados diseñados para diferentes audiencias. Selecciona la ruta que mejor coincida con tu rol y objetivos de vivienda.',

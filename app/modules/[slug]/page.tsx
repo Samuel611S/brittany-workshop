@@ -32,7 +32,7 @@ async function markModuleComplete(moduleSlug: string) {
   await prisma.progress.upsert({
     where: {
       userId_moduleSlug: {
-        userId: payload.userId,
+        userId: payload.userId!,
         moduleSlug,
       },
     },
@@ -40,14 +40,14 @@ async function markModuleComplete(moduleSlug: string) {
       completedAt: new Date(),
     },
     create: {
-      userId: payload.userId,
+      userId: payload.userId!,
       moduleSlug,
     },
   })
 
   // Get updated progress count
   const progressCount = await prisma.progress.count({
-    where: { userId: payload.userId },
+    where: { userId: payload.userId! },
   })
 
   return { success: true, completedCount: progressCount }
@@ -81,7 +81,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
       const progress = await prisma.progress.findUnique({
         where: {
           userId_moduleSlug: {
-            userId: payload.userId,
+            userId: payload.userId!,
             moduleSlug: params.slug,
           },
         },

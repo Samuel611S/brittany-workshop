@@ -40,6 +40,8 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
         onSuccess()
         onClose()
         setFormData({ name: '', email: '', consent: false })
+        // Show success message with login info
+        alert('Account created successfully! Your default password is: demo123\n\nYou can now log in with your email and this password.')
       } else {
         setError(data.message || 'Something went wrong')
       }
@@ -69,7 +71,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
       />
       <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4 animate-fade-in">
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold">{t.joinFoundation}</h2>
+          <h2 className="text-xl font-semibold text-gray-900">{t.joinFoundation}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -97,7 +99,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               placeholder={t.nameRequired.split(' ')[0]}
             />
           </div>
@@ -113,7 +115,7 @@ export default function SignupModal({ isOpen, onClose, onSuccess }: SignupModalP
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               placeholder="your@email.com"
             />
           </div>

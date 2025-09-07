@@ -22,13 +22,21 @@ interface AdminStats {
 
 interface AdminClientProps {
   stats: AdminStats
-  exportUsersCSV: () => Promise<Response>
 }
 
-export default function AdminClient({ stats, exportUsersCSV }: AdminClientProps) {
+export default function AdminClient({ stats }: AdminClientProps) {
   const handleExportUsers = async () => {
     try {
-      const response = await exportUsersCSV()
+      console.log('Starting CSV export...')
+      const response = await fetch('/api/admin/export-csv')
+      console.log('Export response:', response.status, response.ok)
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Export error:', errorData)
+        throw new Error(`Export failed: ${errorData.error || 'Unknown error'}`)
+      }
+      
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -36,8 +44,11 @@ export default function AdminClient({ stats, exportUsersCSV }: AdminClientProps)
       a.download = 'users.csv'
       a.click()
       window.URL.revokeObjectURL(url)
+      console.log('CSV export successful')
     } catch (error) {
       console.error('Export failed:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      alert(`Failed to export CSV: ${errorMessage}`)
     }
   }
 
@@ -47,7 +58,12 @@ export default function AdminClient({ stats, exportUsersCSV }: AdminClientProps)
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p className="text-sm text-gray-600 mt-1">
+                Good evening, Brittany! 👋 Here's your platform overview.
+              </p>
+            </div>
             <button
               onClick={handleExportUsers}
               className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors inline-flex items-center gap-2"
@@ -117,33 +133,41 @@ export default function AdminClient({ stats, exportUsersCSV }: AdminClientProps)
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Latest Feedback</h3>
             <div className="space-y-4">
-              {stats.latestFeedback.map((feedback) => (
-                <div key={feedback.id} className="border-l-4 border-blue-500 pl-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-gray-900">
-                        {feedback.user?.name || 'Anonymous'}
-                      </span>
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`text-sm ${
-                              i < feedback.rating ? 'text-yellow-400' : 'text-gray-300'
-                            }`}
-                          >
-                            ★
-                          </span>
-                        ))}
+              {stats.latestFeedback.length > 0 ? (
+                stats.latestFeedback.map((feedback) => (
+                  <div key={feedback.id} className="border-l-4 border-blue-500 pl-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-gray-900">
+                          {feedback.user?.name || 'Anonymous'}
+                        </span>
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <span
+                              key={i}
+                              className={`text-sm ${
+                                i < feedback.rating ? 'text-yellow-400' : 'text-gray-300'
+                              }`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
                       </div>
+                      <span className="text-xs text-gray-500">
+                        {new Date(feedback.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
-                    <span className="text-xs text-gray-500">
-                      {new Date(feedback.createdAt).toLocaleDateString()}
-                    </span>
+                    <p className="text-sm text-gray-600">{feedback.message}</p>
                   </div>
-                  <p className="text-sm text-gray-600">{feedback.message}</p>
+                ))
+              ) : (
+                <div className="text-center text-gray-500 py-8">
+                  <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                  <p>No feedback yet</p>
+                  <p className="text-sm">Feedback will appear here once users submit it</p>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

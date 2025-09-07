@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 export async function sendAccessEmail(email: string, name: string, accessUrl: string) {
   if (!process.env.RESEND_API_KEY) {
@@ -9,7 +9,7 @@ export async function sendAccessEmail(email: string, name: string, accessUrl: st
   }
 
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await resend!.emails.send({
       from: process.env.EMAIL_FROM || 'workshop@example.com',
       to: [email],
       subject: 'Your Workshop Access Link',

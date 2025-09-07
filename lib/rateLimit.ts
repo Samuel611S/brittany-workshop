@@ -45,7 +45,7 @@ export function rateLimit(
 // Clean up expired entries periodically
 setInterval(() => {
   const now = Date.now()
-  for (const [key, entry] of rateLimitMap.entries()) {
+  for (const [key, entry] of Array.from(rateLimitMap.entries())) {
     if (now > entry.resetTime) {
       rateLimitMap.delete(key)
     }

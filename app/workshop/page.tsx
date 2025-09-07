@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { BookOpen, ExternalLink, Star } from 'lucide-react'
+import { BookOpen, ExternalLink, Star, ArrowLeft } from 'lucide-react'
 import SignupModal from '@/components/SignupModal'
 import ProgressBar from '@/components/ProgressBar'
 import ModuleCard from '@/components/ModuleCard'
+import { useLanguage } from '@/lib/language-context'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { modules, learningTracks, getTotalModules } from '@/data/modules'
 
 export default function WorkshopPage() {
@@ -18,6 +20,7 @@ export default function WorkshopPage() {
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)
 
   const router = useRouter()
+  const { language, t } = useLanguage()
 
   useEffect(() => {
     checkAuth()
@@ -31,10 +34,18 @@ export default function WorkshopPage() {
         if (data.success) {
           setIsAuthenticated(true)
           setCompletedModules(data.progress || [])
+        } else {
+          // Redirect to login if not authenticated
+          router.push('/?login=true')
         }
+      } else {
+        // Redirect to login if not authenticated
+        router.push('/?login=true')
       }
     } catch (error) {
       console.error('Auth check failed:', error)
+      // Redirect to login if not authenticated
+      router.push('/?login=true')
     } finally {
       setIsLoading(false)
     }
@@ -139,10 +150,17 @@ export default function WorkshopPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
+              <button
+                onClick={() => router.back()}
+                className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
+              >
+                <ArrowLeft className="h-5 w-5 mr-1" />
+                {t.back}
+              </button>
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-sm">NK</span>
               </div>
@@ -151,7 +169,9 @@ export default function WorkshopPage() {
                 <p className="text-sm text-gray-600">Learning Dashboard</p>
               </div>
             </div>
-            <button
+            <div className="flex items-center gap-4">
+              <LanguageSwitcher />
+              <button
               onClick={handleStartLearning}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
             >
@@ -163,7 +183,8 @@ export default function WorkshopPage() {
               ) : (
                 'Start Learning'
               )}
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </header>

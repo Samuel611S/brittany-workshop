@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     await prisma.progress.upsert({
       where: {
         userId_moduleSlug: {
-          userId: payload.userId,
+          userId: payload.userId!,
           moduleSlug,
         },
       },
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         completedAt: new Date(),
       },
       create: {
-        userId: payload.userId,
+        userId: payload.userId!,
         moduleSlug,
       },
     })
